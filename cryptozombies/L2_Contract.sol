@@ -28,6 +28,9 @@ contract ZombieFactory {
         // Fire and event
         zombies.push(Zombie(_name, _dna));
         uint id = zombies.length - 1;
+        // msg.sender
+        zombieToOwner[id] = msg.sender;
+        ownerZombieCount[msg.sender]++;
         emit NewZombie(id, _name, _dna);
     }
 
