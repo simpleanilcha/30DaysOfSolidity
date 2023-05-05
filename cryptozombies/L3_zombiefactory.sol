@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.19;
 
-contract ZombieFactory {
+// 1. Import here
+import "./L3_ownable.sol";
+
+// 2. Inherit here:
+contract ZombieFactory is Ownable {
 
     event NewZombie(uint zombieId, string name, uint dna);
 
