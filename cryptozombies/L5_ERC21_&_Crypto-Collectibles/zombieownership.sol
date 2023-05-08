@@ -2,7 +2,10 @@
 pragma solidity 0.8.19;
 
 import "./zombieattack.sol";
+// Import file here
+import "./erc721.sol";
 
-contract ZombieOwnership is ZombieAttack {
-    
+// Declare ERC721 inheritance here
+abstract contract ZombieOwnership is ZombieAttack, ERC721 {
+
 }
