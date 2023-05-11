@@ -7,7 +7,6 @@ import "./erc721.sol";
 // Declare ERC721 inheritance here
 abstract contract ZombieOwnership is ZombieAttack, ERC721 {
 
-  // 1. Define mapping here
   mapping (uint => address) zombieApprovals;
 
   function balanceOf(address _owner) external view returns (uint256) {
@@ -18,7 +17,6 @@ abstract contract ZombieOwnership is ZombieAttack, ERC721 {
     return zombieToOwner[_tokenId];
   }
 
-  // Define _transfer() here
   function _transfer(address _from, address _to, uint256 _tokenId) private {
     ownerZombieCount[_to]++;
     ownerZombieCount[_from]--;
@@ -27,14 +25,14 @@ abstract contract ZombieOwnership is ZombieAttack, ERC721 {
   }
 
   function transferFrom(address _from, address _to, uint256 _tokenId) external payable {
-    // 2. Add the require statement here
     require (zombieToOwner[_tokenId] == msg.sender || zombieApprovals[_tokenId] == msg.sender);
-    // 3. Call _transfer
     _transfer(_from, _to, _tokenId);
   }
 
-  function approve(address _approved, uint256 _tokenId) external payable {
-
+  // 1. Add function modifier here
+  function approve(address _approved, uint256 _tokenId) external payable onlyOwnerOf(_tokenId){
+    // 2. Define function here
+    zombieApprovals[_tokenId] = _approved;
   }
 
 }
