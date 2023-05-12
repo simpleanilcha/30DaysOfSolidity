@@ -5,7 +5,10 @@ import "./zombieattack.sol";
 import "./erc721.sol";
 import "./safemath.sol";
 
-// Declare ERC721 inheritance here
+/// TODO: Replace this with natspec descriptions
+/// @title A contract that manages transfering zombie ownership
+/// @author ANIL MAHARJAN
+/// @dev Compliant with OpenZeppelin's implementation of the ERC721 spec draft
 abstract contract ZombieOwnership is ZombieAttack, ERC721 {
 
   mapping (uint => address) zombieApprovals;
