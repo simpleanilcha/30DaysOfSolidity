@@ -3,6 +3,7 @@ pragma solidity 0.8.19;
 
 import "./zombieattack.sol";
 import "./erc721.sol";
+import "./safemath.sol";
 
 // Declare ERC721 inheritance here
 abstract contract ZombieOwnership is ZombieAttack, ERC721 {
@@ -18,8 +19,10 @@ abstract contract ZombieOwnership is ZombieAttack, ERC721 {
   }
 
   function _transfer(address _from, address _to, uint256 _tokenId) private {
-    ownerZombieCount[_to]++;
-    ownerZombieCount[_from]--;
+    // 1. Replace with SafeMath's `add`
+    ownerZombieCount[_to] = ownerZombieCount[_to].add(1);
+    // 2. Replace with SafeMath's `sub`
+    ownerZombieCount[_from] = ownerZombieCount[_from].sub(1);
     zombieToOwner[_tokenId] = _to;
     emit Transfer(_from, _to, _tokenId);
   }
