@@ -1,25 +1,27 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.7;
+pragma solidity ^0.6.6;
 
-import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
+// 1. Import the "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol" contract
+import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol";
 
-contract PriceConsumerV3 {
-  // 1. Create a `public` variable named `priceFeed` of type `AggregatorV3Interface`.
-  AggregatorV3Interface public priceFeed;
+contract ZombieFactory {
 
-  // 2. Create a constructor
-  constructor() public {
-    // 3. Instantiate the `AggregatorV3Interface` contract
-    priceFeed = AggregatorV3Interface(0x8A753747A1Fa494EC906cE90E9f37563A8AF630e);
+  uint dnaDigits = 16;
+  uint dnaModulus = 10 ** dnaDigits;
+
+  struct Zombie {
+    string name;
+    uint dna;
   }
 
-  function getLatestPrice() public view returns (int) {
-    (,int price,,,) = priceFeed.latestRoundData();
-    return price;
+  Zombie[] public zombies;
+
+  function _createZombie(string memory _name, uint _dna) private {
+    zombies.push(Zombie(_name, _dna));
   }
 
-  function getDecimals() public view returns (uint8) {
-    uint8 decimals = priceFeed.decimals();
-    return decimals;
+  function _generatePseudoRandomDna(string memory _str) private view returns (uint) {
+    uint rand = uint(keccak256(abi.encodePacked(_str)));
+    return rand % dnaModulus;
   }
 }
