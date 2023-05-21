@@ -34,6 +34,16 @@ contract ZombieFactory is VRFConsumerbase {
     zombies.push(Zombie(_name, _dna));
   }
 
+  // 1. Create the `getRandomNumber` function
+    function getRandomNumber() public returns (bytes32 requestId) {
+      return requestRandomness(keyHash, fee);
+    }
+
+    // 2. Create the `fulfillRandomness` function
+    function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+      randomResult = randomness;
+    }
+
   function _generatePseudoRandomDna(string memory _str) private view returns (uint) {
     uint rand = uint(keccak256(abi.encodePacked(_str)));
     return rand % dnaModulus;
